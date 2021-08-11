@@ -63,6 +63,9 @@ module.exports = function(fn) {
       if (intercept(chunk,encoding)) {
         isIntercepting = false;
         var oldBody = Buffer.concat(chunks).toString('utf-8');
+        if (res.getHeaders()['content-type'].indexOf('application/json') === -1) {
+          oldBody = Buffer.concat(chunks);
+        }
 
         if (methods.intercept) {
           if (typeof methods.intercept !== 'function') {
